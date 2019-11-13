@@ -3,7 +3,6 @@ import { Document, Model } from 'mongoose';
 import {pipe} from "fp-ts/lib/pipeable";
 import {tryCatch, TaskEither, fold} from 'fp-ts/lib/TaskEither';
 import * as T from 'fp-ts/lib/Task';
-import { getNow } from '../utils';
 
 interface NoteInterface{
     description: string;
@@ -38,7 +37,7 @@ const resolvers = {
     }, 
     Mutation: {
         addNote: async (_:any, {description, tags, text}: NoteInterface) => {
-            return await saveDoc(new Note({description, tags, text, created: getNow()}));
+            return await saveDoc(new Note({description, tags, text, created: Date.now()}));
         },
         updateNote: async (_:any, query: NoteInterface&NoteID) => {
             const {_id} = query;
@@ -63,7 +62,7 @@ function updateNote(doc: NoteDocument, query: NoteInterface){
     if(query.text){
         doc.text = query.text;
     }
-    doc.modified = getNow();
+    doc.modified = String(Date.now());
     return doc;
 }
 

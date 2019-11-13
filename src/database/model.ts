@@ -12,8 +12,8 @@ const noteSchema = new Schema({
     description: String,
     tags: [{type:String}],
     text: String,
-    created: Date,
-    modified: Date
+    created: String,
+    modified: String
 });
 
 export const Note = model("note", noteSchema);
